@@ -12,11 +12,15 @@ const requiredEnvVars = [
   'REDIS_URI'
 ];
 
-// Validation des variables d'environnement
 function validateEnv() {
-  // TODO: Implémenter la validation
-  // Si une variable manque, lever une erreur explicative
+  requiredEnvVars.forEach((varName) => {
+    if (!process.env[varName]) {
+      throw new Error(`Missing required environment variable: ${varName}`);
+    }
+  });
 }
+
+validateEnv();
 
 module.exports = {
   mongodb: {
