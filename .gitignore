@@ -1,3 +1,43 @@
 # Compléter ici !!!!???
 
-node_modules
+node_modules# Node.js
+node_modules/
+npm-debug.log*
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Logs
+logs/
+*.log
+logs/*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment Variables
+.env
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Redis dump file
+dump.rdb
+appendonly.aof
+
+# MongoDB
+*.lock
+db/
+
+# Production build files (if applicable)
+build/
+dist/
