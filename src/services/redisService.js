@@ -4,10 +4,18 @@
 // Réponse :
 
 // Fonctions utilitaires pour Redis
-async function cacheData(key, data, ttl) {
-    // TODO: Implémenter une fonction générique de cache
+async function cacheData(client, key, data, ttl) {
+  try {
+    await client.set(key, JSON.stringify(data), {
+      EX: ttl
+    });
+    console.log(`Data cached with key: ${key}`);
+  } catch (error) {
+    console.error('Error caching data:', error);
+    throw error;
   }
-  
-  module.exports = {
-    // TODO: Exporter les fonctions utilitaires
-  };
+}
+
+module.exports = {
+  cacheData
+};
