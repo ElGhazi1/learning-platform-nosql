@@ -1,11 +1,15 @@
 // Question: Quelle est la différence entre un contrôleur et une route ?
-// Réponse: 
+// Réponse: Le contrôleur contient la logique métier pour traiter les requêtes HTTP. Il contient les fonctions qui effectuent des actions comme la création, la récupération ou la modification de données. La route, quant à elle, est un "endpoint" défini pour écouter et répondre aux requêtes HTTP spécifiques (GET, POST, etc.).
 
 // Question : Pourquoi séparer la logique métier des routes ?
-// Réponse : 
+// Réponse : La séparation de la logique métier (dans les contrôleurs) et des routes permet de rendre le code plus propre, modulable et réutilisable. Les routes définissent uniquement les chemins d'accès et l'acheminement des requêtes, tandis que les contrôleurs gèrent la logique et les interactions avec la base de données ou autres services.
 
 const { ObjectId } = require('mongodb');
 const db = require('../config/db');
+const redisService = require('../services/redisService');
+
+// TTL pour les données en cache Redis
+const TTL = 3600; // 1 heure
 
 // Contrôleur pour créer un cours
 async function createCourse(req, res) {
@@ -43,12 +47,27 @@ async function getCourse(req, res) {
       return res.status(400).json({ error: 'Invalid course ID' });
     }
 
+    const redisClient = db.getRedisClient();
+    const cacheKey = `course:${id}`;
+
+    // Vérification du cache Redis
+    const cachedData = await redisService.getCachedData(redisClient, cacheKey);
+    if (cachedData) {
+      console.log('Returning data from Redis cache');
+      return res.status(200).json(cachedData);
+    }
+
+    console.log('Fetching data from MongoDB');
     const course = await db.getDb().collection('courses').findOne({ _id: new ObjectId(id) });
 
     if (!course) {
+      console.log('Course not found in MongoDB');
       return res.status(404).json({ error: 'Course not found' });
     }
 
+    // Mise en cache des données
+    await redisService.cacheData(redisClient, cacheKey, course, TTL);
+    console.log('Returning data from MongoDB');
     res.status(200).json(course);
   } catch (error) {
     console.error('Error fetching course:', error);
