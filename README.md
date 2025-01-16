@@ -39,7 +39,7 @@ Ce projet est une API backend pour une plateforme d'apprentissage en ligne, éla
    npm install
    ```
 
-4. Configurez les variables d'environnement dans un fichier .env à la racine du projet. Exemple :
+4. Configurez les variables d'environnement dans un fichier `.env` à la racine du projet. Exemple :
    ```env
    PORT=3000
    DB_URI=mongodb://localhost:27017/learning-platform
@@ -61,13 +61,12 @@ npm start
 
 Le projet sera disponible à l'adresse suivante : [http://localhost:3000](http://localhost:3000).
 
-![Initialisation du projet](screens/screen-initialisation-local-du-projet.png)
-![Dépôt initialisé](screens/screen-depo-version-initialiser.png)
+![Initialisation du projet](screens/logs_sc/log-0-Cache-miss-Fetching-data-Data-cached.PNG)
 
 ## Structure du Projet
 Voici une description de l'organisation du code :
 
-```
+```plaintext
 src/
 |-- config/
 |   |-- db.js            # Configuration de la connexion à la base de données
@@ -96,24 +95,25 @@ src/
 - **Express.js** a été utilisé pour sa simplicité et sa robustesse dans la création d'API RESTful.
 
 ### Variables d'environnement
-- Les paramètres sensibles comme l'URI de la base de données et les clés secrètes sont gérés via un fichier .env pour sécuriser les configurations.
+- Les paramètres sensibles comme l'URI de la base de données et les clés secrètes sont gérés via un fichier `.env` pour sécuriser les configurations.
 
 ### Gestion des erreurs
 - Une gestion centralisée des erreurs permet de renvoyer des réponses cohérentes à l'utilisateur.
 
 ### Modélisation des données
-- Les schémas MongoDB sont définis dans services/mongoService.js pour assurer la cohérence des données.
+- Les schémas MongoDB sont définis dans `services/mongoService.js` pour assurer la cohérence des données.
 
 ## Tests et Validation
 
 ### Outils Utilisés
 - **Postman** : pour tester les routes de l'API.
 - **MongoDB Compass** : pour vérifier les données insérées dans la base de données.
+- **Redis Insights** : pour monitorer la gestion du cache.
 
-### URL et Tests Effectués
+### Tests Effectués
 
 1. **Création d'un cours**
-   - **URL** : POST http://localhost:3000/courses
+   - **URL** : POST `http://localhost:3000/courses`
    - **Payload** :
      ```json
      {
@@ -123,30 +123,25 @@ src/
      ```
    - **Résultat attendu** : Code 201 avec un message de succès et l'ID du cours créé.
    - **Capture d'écran** :
-     ![POST Test](screens/TESTs_postman/POST_in_courses_collections.PNG)
+     ![POST Test](screens/TESTs_postman/api_create_course_201ok.PNG)
 
 2. **Récupération d'un cours valide**
-   - **URL** : GET http://localhost:3000/courses/{id}
+   - **URL** : GET `http://localhost:3000/courses/{id}`
    - **Résultat attendu** : Code 200 avec les détails du cours.
    - **Capture d'écran** :
      ![GET Valid ID](screens/TESTs_postman/api_get_course_200ok.PNG)
 
-3. **Récupération d'un cours invalide**
-   - **URL** : GET http://localhost:3000/courses/invalidID
-   - **Résultat attendu** : Code 400 avec un message d'erreur.
-   - **Capture d'écran** :
-     ![GET Invalid ID](screens/TESTs_postman/invalid_id_404_not_found.PNG)
-
-4. **Statistiques des cours**
-   - **URL** : GET http://localhost:3000/courses/stats
+3. **Statistiques des cours**
+   - **URL** : GET `http://localhost:3000/courses/stats`
    - **Résultat attendu** : Code 200 avec le total des cours.
    - **Capture d'écran** :
      ![GET Stats](screens/TESTs_postman/api_get_stats_200ok.PNG)
 
-5. **Connexion aux bases de données**
-   - **Action** : Vérification que MongoDB et Redis sont connectés.
-   - **Capture d'écran** :
-     ![Connection DB](screens/TESTs_postman/npm_start_server_connecting_to_databases.PNG)
+4. **Gestion du cache Redis**
+   - **Avant ajout** : Redis était vide.
+     ![Redis vide](screens/redis_insights/initially_none_inside_redis_memory.PNG)
+   - **Après ajout** : Les données des cours sont mises en cache avec une durée de vie de 20 minutes.
+     ![Redis avec données](screens/redis_insights/courses-set-data-added-inside-redis-memory-one-of-them-with-ttl-20min.PNG)
 
 ### Logs des Tests
 1. **Cache miss et données mises en cache**
@@ -270,9 +265,10 @@ Voici les réponses aux questions posées dans les commentaires du code :
     - Augmenter la sécurité en évitant le stockage des informations sensibles directement dans le code.
 
 ## Conclusion
-Ce projet illustre les bonnes pratiques de développement pour une API backend en utilisant une base de données NoSQL et des outils modernes comme Redis pour optimiser les performances. Chaque section du projet est conçue pour être modulaire, réutilisable et facile à maintenir. N'hésitez pas à explorer les différentes parties du code et à poser vos questions si besoin.
+Ce projet illustre les bonnes pratiques de développement pour une API backend en utilisant une base de données NoSQL et des outils modernes comme Redis pour optimiser les performances. Chaque fonctionnalité a été testée et documentée avec des captures d'écran.
 
 ## Auteur
-- **Nom** : [Mohamed EL GHAZI]
-- **Email** : [mohamed.elghazi6-etu@etu.univh2c.ma]
-- **GitHub** : [https://github.com/ElGhazi1]
+- **Nom** : Mohamed EL GHAZI
+- **Email** : mohamed.elghazi6-etu@etu.univh2c.ma
+- **GitHub** : [https://github.com/ElGhazi1](https://github.com/ElGhazi1)
+
