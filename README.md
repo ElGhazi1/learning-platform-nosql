@@ -149,7 +149,7 @@ src/
    - **Cache actif** : Données récupérées directement de Redis.
      ![Cache actif](screens/logs_sc/log-1-Cache-hit-Returning-data-from-Redis-cache.PNG)
    - **Redis hors service** : Erreur capturée et bascule vers MongoDB.
-     ![Redis Down](screens/logs/log-3-error-redis-down.PNG)
+     ![Redis Down](screens/logs_sc/log-3-error-redis-down.PNG)
 
 ## Réponses aux Questions
 
