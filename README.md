@@ -150,15 +150,15 @@ src/
 
 ### Logs des Tests
 1. **Cache miss et données mises en cache**
-   - ![Log 0](screens/logs/log-0-Cache-miss-Fetching-data-Data-cached.PNG)
+   - ![Log 0](screens/logs_sc/log-0-Cache-miss-Fetching-data-Data-cached.PNG)
 2. **Cache hit et récupération des données de Redis**
-   - ![Log 1](screens/logs/log-1-Cache-hit-Returning-data-from-Redis-cache.PNG)
+   - ![Log 1](screens/logs_sc/log-1-Cache-hit-Returning-data-from-Redis-cache.PNG)
 3. **Erreur Redis indisponible**
-   - ![Log 3](screens/logs/log-3-error-redis-down.PNG)
+   - ![Log 3](screens/logs_sc/log-3-error-redis-down.PNG)
 4. **Retour des données via MongoDB après panne Redis**
-   - ![Log 4](screens/logs/log-4-redis-back-and-returning-data-from-mongodb.PNG)
+   - ![Log 4](screens/logs_sc/log-4-redis-back-and-returning-data-from-mongodb.PNG)
 5. **Requête invalide : 404 non trouvé**
-   - ![Log 2](screens/logs/log-2-404-not-found-invalid-id.PNG)
+   - ![Log 2](screens/logs_sc/log-2-404-not-found-invalid-id.PNG)
 
 ## Réponses aux Questions
 Voici les réponses aux questions posées dans les commentaires du code :
